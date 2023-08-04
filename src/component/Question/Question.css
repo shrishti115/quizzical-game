@@ -11,6 +11,10 @@
 	margin-bottom: 12px;
     font-family: "Inter", sans-serif;
 }
+.question-correct-btn{
+    background-color: #7d9181;
+    border: none;
+}
 
 .question-btn {
 	min-width: 65px;

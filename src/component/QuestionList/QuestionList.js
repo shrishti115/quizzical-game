@@ -17,7 +17,11 @@ export default function QuestionList({ combination, handleGameStart }) {
       `https://opentdb.com/api.php?amount=5&category=${combination.category}&difficulty=${combination.difficulty}&type=${combination.type}`
     )
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) => {
+        if (!data.results || data.results.length === 0) {
+          alert("No questions found for the selected options");
+          handleGameStart();
+        }
         setQuestionsArray(
           data.results.map((question) => {
             return {
@@ -25,12 +29,13 @@ export default function QuestionList({ combination, handleGameStart }) {
               id: nanoid(),
               selectedAnswer: "",
               showAnswer: false,
+              showCorrectAnswer: false,
             };
           })
-        )
-      )
+        );
+      })
       .finally(() => {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       });
   }, []);
 
@@ -72,6 +77,7 @@ export default function QuestionList({ combination, handleGameStart }) {
         return {
           ...question,
           showAnswer: true,
+          showCorrectAnswer: true,
         };
       })
     );
@@ -82,6 +88,7 @@ export default function QuestionList({ combination, handleGameStart }) {
       {loading ? (
         <div className="loading-container">
           <div className="loading"></div>
+          <p className="loading-text">cooking up some questions for you...</p>
         </div>
       ) : (
         <section className="questionList-container">
@@ -95,6 +102,7 @@ export default function QuestionList({ combination, handleGameStart }) {
               question={question.question}
               showAnswer={question.showAnswer}
               selectedAnswer={question.selectedAnswer}
+              showCorrectAnswer={question.showCorrectAnswer}
             />
           ))}
           <div className="bottom-container">

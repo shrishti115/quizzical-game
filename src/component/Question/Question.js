@@ -12,6 +12,7 @@ export default function Question({
   question,
   showAnswer,
   selectedAnswer,
+  showCorrectAnswer,
 }) {
   const incorrectAnswersElements = incorrect_answer.map((answer) => {
     const incorrectAnswerClassName = `
@@ -31,7 +32,7 @@ export default function Question({
   const correctAnswerClassName = ` ${
     selectedAnswer === correct_answer ? "question-btn-selected" : "question-btn"
   }
-${showAnswer && selectedAnswer === correct_answer && "question-btn-correct"}`;
+${showAnswer && "question-btn-correct"}`;
 
   const correctAnswerElement = (
     <button
